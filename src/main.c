@@ -5,18 +5,10 @@
 int main(int argc, char *argv[]){ //For command line arguments
     decoded_instr_t inst = {0};
     
-    inst.raw = 0x00A28233;
-    inst.opcode = 51;
-    inst.rd = 4;
-    inst.rs1 = 5;
-    inst.rs2 = 10;
-    inst.funct3 = 0;
-    inst.funct7 = 0;
-    inst.imm = 0;
-    
-    strcpy(inst.mnemonic, "add");
+    uint32_t instruction = 0x00A28233;
 
-    printf("Decoded Instruction\n");
+    decode_instruction(instruction, &inst);
+    
     printf("Raw         : 0x%08X\n", inst.raw);
     printf("Mnemonic    : %s\n", inst.mnemonic);
     printf("opcode      : %u\n", inst.opcode);
@@ -25,7 +17,6 @@ int main(int argc, char *argv[]){ //For command line arguments
     printf("rs1         : %u\n", inst.rs1);
     printf("rs2         : %u\n", inst.rs2);
     printf("funct7      : %u\n", inst.funct7);
-    printf("imm         : %d\n", inst.imm);
 
     return 0;
 }
