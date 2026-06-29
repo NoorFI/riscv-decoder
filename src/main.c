@@ -17,7 +17,21 @@ int main(int argc, char *argv[]){ //For command line arguments
     }
 
     printf("Loaded %d instructions\n", count);
-    memory_dump(memory,64);
+    decoded_instr_t inst = {0};
+
+    /* Temporary test instructions */
+
+    decode_instruction(0x00500113, &inst);
+    print_instructions(0x00000000, &inst);
+
+    decode_instruction(0x003100B3, &inst);
+    print_instructions(0x00000008, &inst);
+
+    decode_instruction(0x0020A023, &inst);
+    print_instructions(0x00000010, &inst);
+
+    decode_instruction(0x004000EF, &inst);
+    print_instructions(0x0000001C, &inst);
 
     return 0;
 }

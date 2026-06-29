@@ -283,3 +283,48 @@ void decode_j_type(uint32_t instruction, decoded_instr_t *decoded){
 
     strcpy(decoded->mnemonic, "jal");
 }
+
+void print_instructions(uint32_t address, decoded_instr_t *inst){
+    //Parameters: The address and decoded instruction
+    //Formatted output is displayed
+
+    if(strcmp(inst->mnemonic, "UNKNOWN")==0){
+        printf("0x%08X %08X UNKNOWN\n", address, inst->raw); 
+        return;
+    }
+
+    switch(inst->opcode){
+        case OP_REG:
+            printf("0x%08X %08X %-6s x%u, x%u, x%u\n", address, inst->raw, inst->mnemonic, inst->rd, inst->rs1, inst->rs2);
+            break;
+
+        case OP_IMM:
+            printf("0x%08X %08X %-6s x%u, x%u, %d\n", address, inst->raw, inst->mnemonic, inst->rd, inst->rs1, inst->imm);
+            break;
+
+        case OP_LOAD:
+            printf("0x%08X %08X %-6s x%u, %d(x%u)\n", address, inst->raw, inst->mnemonic, inst->rd, inst->imm, inst->rs1);
+            break;
+
+        case OP_STORE:
+            printf("0x%08X %08X %-6s x%u, %d(x%u)\n", address, inst->raw, inst->mnemonic, inst->rs2, inst->imm, inst->rs1);
+            break;
+
+        case OP_BRANCH:
+            printf("0x%08X %08X %-6s x%u, x%u, %d\n", address, inst->raw, inst->mnemonic, inst->rs1, inst->rs2, inst->imm);
+            break;
+
+        case OP_LUI:
+        case OP_AUIPC:
+        case OP_JAL:
+
+            printf("0x%08X %08X %-6s x%u, %d\n", address, inst->raw, inst->mnemonic, inst->rd, inst->imm);
+            break;
+
+        case OP_JALR:
+
+            printf("0x%08X %08X %-6s x%u, %d(x%u)\n", address, inst->raw, inst->mnemonic, inst->rd, inst->imm, inst->rs1);
+            break;
+    }
+
+}

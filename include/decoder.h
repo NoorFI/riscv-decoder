@@ -48,6 +48,7 @@ void decode_i_type(uint32_t instruction, decoded_instr_t *decoded);
 void decode_s_type(uint32_t instruction, decoded_instr_t *decoded);
 void decode_b_type(uint32_t instruction, decoded_instr_t *decoded);
 void decode_u_type(uint32_t instruction, decoded_instr_t *decoded);
-void decode_j_type(uint32_t instruction, decoded_instr_t *decoded); //Function prototypes
+void decode_j_type(uint32_t instruction, decoded_instr_t *decoded); 
+void print_instructions(uint32_t address, decoded_instr_t *inst); //Function prototypes
 
 #endif

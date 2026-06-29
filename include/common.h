@@ -7,7 +7,7 @@
 #include <string.h> //All headers
 
 #define XLEN 32
-#define MEMORY_SIZE (64 * 1024)
+#define MEMORY_SIZE (64*1024) //Because we are not using magic numbers, defining constants.
 #define INSTRUCTION_SIZE 4
 #define MNEMONIC_SIZE 16
 #define DUMP_WIDTH 16
