@@ -35,6 +35,10 @@ void decode_instruction(uint32_t instruction, decoded_instr_t *decoded){
         case OP_STORE:
             decode_s_type(instruction, decoded);
             break;
+        
+        case OP_BRANCH:
+            decode_b_type(instruction, decoded);
+            break;
 
         default:
             strcpy(decoded->mnemonic, "UNKNOWN");
@@ -196,6 +200,43 @@ void decode_s_type(uint32_t instruction, decoded_instr_t *decoded){
             break;
         case 2:
             strcpy(decoded->mnemonic, "sw");
+            break;
+    }
+}
+
+void decode_b_type(uint32_t instruction, decoded_instr_t *decoded){
+    decoded->funct3 = extract_field(instruction, 14, 12);
+    decoded->rs1 = extract_field(instruction, 19, 15);
+    decoded->rs2 = extract_field(instruction, 24, 20);
+    decoded->rd = 0;
+    decoded->funct7 = 0;
+    uint32_t imm12 = extract_field(instruction, 31, 31);
+    uint32_t imm11 = extract_field(instruction, 7, 7);
+    uint32_t imm10_5 = extract_field(instruction, 30, 25);
+    uint32_t imm4_1 = extract_field(instruction, 11, 8);
+    uint32_t imm = (imm12 << 12) | (imm11 << 11) | (imm10_5 << 5) | (imm4_1 << 1);
+    decoded->imm = sign_extend(imm, 13);
+
+    strcpy(decoded->mnemonic, "UNKNOWN");
+
+    switch(decoded->funct3){
+        case 0:
+            strcpy(decoded->mnemonic, "beq");
+            break;
+        case 1:
+            strcpy(decoded->mnemonic, "bne");
+            break;
+        case 4:
+            strcpy(decoded->mnemonic, "blt");
+            break;
+        case 5:
+            strcpy(decoded->mnemonic, "bge");
+            break;
+        case 6:
+            strcpy(decoded->mnemonic, "bltu");
+            break;
+        case 7:
+            strcpy(decoded->mnemonic, "bgeu");
             break;
     }
 }
