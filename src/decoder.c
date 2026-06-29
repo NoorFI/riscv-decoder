@@ -39,6 +39,11 @@ void decode_instruction(uint32_t instruction, decoded_instr_t *decoded){
         case OP_BRANCH:
             decode_b_type(instruction, decoded);
             break;
+            
+        case OP_LUI:
+        case OP_AUIPC:
+            decode_u_type(instruction, decoded);
+            break;
 
         default:
             strcpy(decoded->mnemonic, "UNKNOWN");
@@ -238,5 +243,23 @@ void decode_b_type(uint32_t instruction, decoded_instr_t *decoded){
         case 7:
             strcpy(decoded->mnemonic, "bgeu");
             break;
+    }
+}
+
+void decode_u_type(uint32_t instruction, decoded_instr_t *decoded){
+    decoded->rd = extract_field(instruction, 11, 7);
+    decoded->funct3 = 0;
+    decoded->rs1 = 0;
+    decoded->rs2 = 0;
+    decoded->funct7 = 0;
+    decoded->imm = instruction & 0xFFFFF000;
+
+    strcpy(decoded->mnemonic, "UNKNOWN");
+
+    if(decoded->opcode == OP_LUI){
+        strcpy(decoded->mnemonic, "lui");
+    }
+    else if(decoded->opcode == OP_AUIPC){
+        strcpy(decoded->mnemonic, "auipc");
     }
 }

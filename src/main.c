@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]){ //For command line arguments
     decoded_instr_t inst = {0};
     
-    uint32_t instruction = 0xFE209CE3;
+    uint32_t instruction = 0x12345137;
 
     decode_instruction(instruction, &inst);
     
