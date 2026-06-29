@@ -32,6 +32,10 @@ void decode_instruction(uint32_t instruction, decoded_instr_t *decoded){
             decode_i_type(instruction, decoded);
             break;
 
+        case OP_STORE:
+            decode_s_type(instruction, decoded);
+            break;
+
         default:
             strcpy(decoded->mnemonic, "UNKNOWN");
     }
@@ -167,5 +171,31 @@ void decode_i_type(uint32_t instruction, decoded_instr_t *decoded){
 
     else if(decoded->opcode==OP_JALR){
         strcpy(decoded->mnemonic, "jalr");
+    }
+}
+
+void decode_s_type(uint32_t instruction, decoded_instr_t *decoded){
+    decoded->funct3 = extract_field(instruction, 14, 12);
+    decoded->rs1 = extract_field(instruction, 19, 15);
+    decoded->rs2 = extract_field(instruction, 24, 20);
+    decoded->rd = 0;
+    decoded->funct7 = 0;
+    uint32_t imm_low = extract_field(instruction, 11, 7);
+    uint32_t imm_high = extract_field(instruction, 31, 25);
+    uint32_t imm = (imm_high << 5) | imm_low;
+    decoded->imm = sign_extend(imm, 12);
+
+    strcpy(decoded->mnemonic, "UNKNOWN");
+
+    switch(decoded->funct3){
+        case 0:
+            strcpy(decoded->mnemonic, "sb");
+            break;
+        case 1:
+            strcpy(decoded->mnemonic, "sh");
+            break;
+        case 2:
+            strcpy(decoded->mnemonic, "sw");
+            break;
     }
 }
