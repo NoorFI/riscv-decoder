@@ -3,21 +3,21 @@
 #include "memory.h"
 
 int main(int argc, char *argv[]){ //For command line arguments
-    decoded_instr_t inst = {0};
-    
-    uint32_t instruction = 0x004000EF;
+    if(argc!=2){
+        printf("Usage: %s file.hex\n",argv[0]);
+        return 1;
+    }
 
-    decode_instruction(instruction, &inst);
-    
-    printf("Raw         : 0x%08X\n", inst.raw);
-    printf("Mnemonic    : %s\n", inst.mnemonic);
-    printf("opcode      : %u\n", inst.opcode);
-    printf("rd          : %u\n", inst.rd);
-    printf("funct3      : %u\n", inst.funct3);
-    printf("rs1         : %u\n", inst.rs1);
-    printf("rs2         : %u\n", inst.rs2);
-    printf("funct7      : %u\n", inst.funct7);
-    printf("imm         : %d\n", inst.imm);
+    uint8_t memory[MEMORY_SIZE]={0};
+    int count = load_hex_file(argv[1], memory);
+
+    if(count<0){
+        printf("Error opening file\n");
+        return 1;
+    }
+
+    printf("Loaded %d instructions\n", count);
+    memory_dump(memory,64);
 
     return 0;
 }
