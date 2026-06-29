@@ -44,6 +44,10 @@ void decode_instruction(uint32_t instruction, decoded_instr_t *decoded){
         case OP_AUIPC:
             decode_u_type(instruction, decoded);
             break;
+            
+        case OP_JAL:
+            decode_j_type(instruction, decoded);
+            break;
 
         default:
             strcpy(decoded->mnemonic, "UNKNOWN");
@@ -262,4 +266,20 @@ void decode_u_type(uint32_t instruction, decoded_instr_t *decoded){
     else if(decoded->opcode == OP_AUIPC){
         strcpy(decoded->mnemonic, "auipc");
     }
+}
+
+void decode_j_type(uint32_t instruction, decoded_instr_t *decoded){
+    decoded->rd = extract_field(instruction, 11, 7);
+    decoded->rs1 = 0;
+    decoded->rs2 = 0;
+    decoded->funct3 = 0;
+    decoded->funct7 = 0;
+    uint32_t imm20 = extract_field(instruction, 31, 31);
+    uint32_t imm19_12 = extract_field(instruction, 19, 12);
+    uint32_t imm11 = extract_field(instruction, 20, 20);
+    uint32_t imm10_1 = extract_field(instruction, 30, 21);
+    uint32_t imm = (imm20 << 20) | (imm19_12 << 12) | (imm11 << 11) | (imm10_1 << 1);
+    decoded->imm = sign_extend(imm, 21);
+
+    strcpy(decoded->mnemonic, "jal");
 }
