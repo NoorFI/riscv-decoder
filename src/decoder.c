@@ -1,4 +1,4 @@
-#include "decoder.c"
+#include "decoder.h"
 //initializing functions, using prototypes defined
 uint32_t extract_field(uint32_t instruction, int high, int low){
     return 0;
