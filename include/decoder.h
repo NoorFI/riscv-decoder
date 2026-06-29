@@ -4,14 +4,15 @@
 #include "common.h"
 
 typedef struct{
+    uint32_t raw;
     uint32_t opcode;
     uint32_t rd;
     uint32_t funct3;
     uint32_t rs1;
     uint32_t rs2;
     uint32_t funct7;
-    uint32_t raw;
     int32_t imm;
+    char mnemonic[16];
 } decoded_instr_t;
 
 uint32_t extract_field(uint32_t instruction, int high, int low);
