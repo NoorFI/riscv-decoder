@@ -1,4 +1,13 @@
+riscv-decoder
+build/
+bin/
 .vscode/
 *.o
-decoder
+*.d
+*.twp
+*.swp
 *.out
+vgcore.*
+.vscode/
+.idea/
+.DS_Store
