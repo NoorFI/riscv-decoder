@@ -3,7 +3,9 @@ CFLAGS = -Wall -Wextra -std=c11 -g
 
 INCLUDES = -Iinclude
 
-SRC = src/main.c \ src/decoder.c \ src/memory.c
+SRC = src/main.c \
+	src/decoder.c \
+	src/memory.c
 
 TARGET = riscv-decoder
 
