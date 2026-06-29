@@ -16,22 +16,35 @@ int main(int argc, char *argv[]){ //For command line arguments
         return 1;
     }
 
-    printf("Loaded %d instructions\n", count);
-    decoded_instr_t inst = {0};
+    printf("RISC-V RV32I Instruction Decoder\n");
+    printf("================================\n\n");
 
-    /* Temporary test instructions */
+    printf("Loaded %d instructions from %s\n\n", count, argv[1]);
+    printf("%-12s %-10s %s\n", "Addr", "Hex", "Assembly");
 
-    decode_instruction(0x00500113, &inst);
-    print_instructions(0x00000000, &inst);
+    printf("-----------------------------------------\n");
 
-    decode_instruction(0x003100B3, &inst);
-    print_instructions(0x00000008, &inst);
+    int valid = 0;
+    int unknown = 0;
 
-    decode_instruction(0x0020A023, &inst);
-    print_instructions(0x00000010, &inst);
+    decoded_instr_t inst;
 
-    decode_instruction(0x004000EF, &inst);
-    print_instructions(0x0000001C, &inst);
+    for(int i = 0; i < count; i++){
+        uint32_t address = i*4;
+        uint32_t instruction = memory[address] | (memory[address+1]<<8) | (memory[address+2]<<16) | (memory[address+3]<<24);
+        decode_instruction(instruction,&inst);
+        print_instructions(address,&inst);
+
+        if(strcmp(inst.mnemonic, "UNKNOWN")==0){
+            unknown++;
+        }
+        else{
+            valid++;
+        }
+    }
+
+    printf("\n");
+    printf("Decoded %d instructions (%d valid, %d unknown)\n", count, valid, unknown);
 
     return 0;
 }
