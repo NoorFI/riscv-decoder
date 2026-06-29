@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]){ //For command line arguments
     decoded_instr_t inst = {0};
     
-    uint32_t instruction = 0x00A28233;
+    uint32_t instruction = 0x00500113;
 
     decode_instruction(instruction, &inst);
     
@@ -17,6 +17,7 @@ int main(int argc, char *argv[]){ //For command line arguments
     printf("rs1         : %u\n", inst.rs1);
     printf("rs2         : %u\n", inst.rs2);
     printf("funct7      : %u\n", inst.funct7);
+    printf("imm         : %d\n", inst.imm);
 
     return 0;
 }

@@ -42,6 +42,12 @@ typedef struct{
 
 uint32_t extract_field(uint32_t instruction, int high, int low);
 int32_t sign_extend(uint32_t value, int bits);
-void decode_instruction(uint32_t instruction, decoded_instr_t *decoded); //Function prototypes
+void decode_instruction(uint32_t instruction, decoded_instr_t *decoded);
+void decode_r_type(uint32_t instruction, decoded_instr_t *decoded);
+void decode_i_type(uint32_t instruction, decoded_instr_t *decoded);
+void decode_s_type(uint32_t instruction, decoded_instr_t *decoded);
+void decode_b_type(uint32_t instruction, decoded_instr_t *decoded);
+void decode_u_type(uint32_t instruction, decoded_instr_t *decoded);
+void decode_j_type(uint32_t instruction, decoded_instr_t *decoded); //Function prototypes
 
 #endif
